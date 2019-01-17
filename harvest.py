@@ -5,9 +5,10 @@ from constants import oai_url, oai_id
 from downloader import download
 
 sickle = Sickle(oai_url)
-counter = 1
+counter = 0
 skip = 0
 while True:
+    counter += 1
     oaid = oai_id + str(counter)
     try:
         record = sickle.GetRecord(identifier=oaid, metadataPrefix='oai_dc')
@@ -15,9 +16,8 @@ while True:
             skip = 0
         else:
             skip += 1
-        counter += 1
     except IdDoesNotExist:
         skip += 1
-        if skip > 50:
-            break
+    if skip > 500:
+        break
 print("Finished")

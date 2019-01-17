@@ -13,7 +13,7 @@ def download(oaid, rec):
     if ('<error code="idDoesNotExist">' not in rec) or ("hasFile:true" in rec):
         splits = re.split('<dc:identifier xsi:type="tel:URL">|</dc:identifier>', rec)
         for url in splits:
-            if "download" in url:
+            if "/download/" in url:
                 r = requests.get(url)
                 d = str(r.headers['Content-disposition'])
                 filename = str(re.findall("filename=(.+)", d)[0]).replace('"', '')
@@ -22,7 +22,7 @@ def download(oaid, rec):
                     target = downloadpath + oaid + "/" + filename
                     wget.download(url, target)
                     # Wenn kein PDF vorhanden ist, wird zu 99% eine zip datei da sein. Diese soll entpackt und der inhalt validiert werden
-                    if not fnmatch.filter(os.listdir(downloadpath + oaid), "*.pdf"):
+                    if fnmatch.filter(os.listdir(downloadpath + oaid), "*.zip"):
                         with zipfile.ZipFile(target, 'r') as zip_ref:
                             zip_ref.extractall(downloadpath + oaid)
                     filelist = os.listdir(downloadpath + oaid)
