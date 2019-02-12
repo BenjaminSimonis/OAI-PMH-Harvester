@@ -1,6 +1,6 @@
 import json
 import subprocess
-from time import sleep
+from constants import get_constants as c
 
 from lxml import etree
 
@@ -81,7 +81,7 @@ def main(target, path):
             "eventOutcomeDetailNote": note
         }
         print(json.dumps(out))
-        open(path + "validation.json", "a+").write(target.split("/")[-1] + "\n" + str(json.dumps(out)) + "\n")
+        open(path + "validation.json", "a+").write(target.split(c().SLASH())[-1] + "\n" + str(json.dumps(out)) + "\n")
         return 0
     except JhoveException as e:
         return e

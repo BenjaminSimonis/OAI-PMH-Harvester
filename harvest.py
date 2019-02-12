@@ -2,12 +2,11 @@ from urllib.error import HTTPError
 
 from lxml import etree
 from sickle import Sickle
-from sickle.oaiexceptions import IdDoesNotExist
 
-from constants import oai_url
+from constants import get_constants as c
 from downloader import download
 
-sickle = Sickle(oai_url)
+sickle = Sickle(c().OAI_URL())
 skip = 0
 while True:
     try:
