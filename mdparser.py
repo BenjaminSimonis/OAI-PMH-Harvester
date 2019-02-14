@@ -16,12 +16,21 @@ def parser(filename, dcrecord, path):
 def mdwriter(filename, tags, mds, path):
     mddir = path + c().SLASH() + "metadata" + c().SLASH()
     os.makedirs(mddir)
-    with open(mddir + "metadata.csv") as mdfile:
+    with open(mddir + "metadata.csv", "w+") as mdfile:
         mdfile.write('filename')
-        for item in tags:
-            mdfile.write(',' + item)
+        datacheckandwrite(mdfile, tags)
         mdfile.write('\nobjects/')
         mdfile.write(filename)
-        for item in mds:
-            mdfile.write(',' + item)
+        datacheckandwrite(mdfile, mds)
+    pass
+
+
+def datacheckandwrite(mdfile, list):
+    for item in list:
+        if item is None:
+            mdfile.write(',' + '""')
+        elif ' ' in str(item):
+            mdfile.write(',"' + str(item) + '"')
+        else:
+            mdfile.write(',' + str(item))
     pass
