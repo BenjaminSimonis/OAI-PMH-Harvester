@@ -24,7 +24,7 @@ def download(link, rec):
         with zipfile.ZipFile(target, 'r') as zip_ref:
             zip_ref.extractall(path)
     filelist = os.listdir(path)
-    parser(filelist, rec, path)
+    parser(filename, rec, path)
     for file in filelist:
         if ("zip" or "json") not in file:
             validator.main(path + c().SLASH() + file, path + c().SLASH())
